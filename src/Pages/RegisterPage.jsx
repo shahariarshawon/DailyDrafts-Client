@@ -1,0 +1,136 @@
+import { useState } from "react";
+import { Eye, EyeOff, Mail, Lock, User,CameraIcon } from "lucide-react";
+import { Link } from "react-router";
+
+const RegisterPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    // handle registration logic
+    alert("Registration submitted!");
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-100 to-violet-100 p-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+        <h2 className="text-3xl font-bold text-center text-rose-500 mb-6">
+          Create Account
+        </h2>
+
+        <form onSubmit={handleRegister} className="space-y-5">
+          {/* Full Name */}
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Full Name
+            </label>
+            <div className="relative">
+              <User className="absolute left-3 top-2.5 text-gray-400" size={18} />
+              <input
+                type="text"
+                required
+                placeholder="Your full name"
+                className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-400"
+              />
+            </div>
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Email
+            </label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-2.5 text-gray-400" size={18} />
+              <input
+                type="email"
+                required
+                placeholder="you@example.com"
+                className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-400"
+              />
+            </div>
+          </div>
+
+          {/* Password */}
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-2.5 text-gray-400" size={18} />
+              <input
+                type={showPassword ? "text" : "password"}
+                required
+                placeholder="Password"
+                className="pl-10 pr-10 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-400"
+              />
+              <div
+                className="absolute right-3 top-2.5 cursor-pointer text-gray-500"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </div>
+            </div>
+          </div>
+
+          {/* Confirm Password */}
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Confirm Password
+            </label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-2.5 text-gray-400" size={18} />
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                required
+                placeholder="Re-enter password"
+                className="pl-10 pr-10 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-400"
+              />
+              <div
+                className="absolute right-3 top-2.5 cursor-pointer text-gray-500"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </div>
+            </div>
+          </div>
+
+          {/* User Icon photoURL */}
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              User Icon
+            </label>
+            <div className="relative">
+              <CameraIcon className="absolute left-3 top-2.5 text-gray-400" size={18} />
+              <input
+                type="text"
+                required
+                placeholder="User Icon's PhotoURL"
+                className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-400"
+              />
+            </div>
+          </div>
+
+          {/* Register Button */}
+          <button
+            type="submit"
+            className="w-full py-2 rounded-md text-white bg-rose-500 hover:bg-rose-600 transition font-medium"
+          >
+            Register
+          </button>
+        </form>
+
+        {/* Footer */}
+        <div className="mt-4 text-sm text-center text-gray-600">
+          Already have an account?{" "}
+          <Link to="/login" className="text-violet-500 hover:underline">
+            Login
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default RegisterPage;
