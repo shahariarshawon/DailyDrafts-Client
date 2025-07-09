@@ -1,14 +1,32 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { Link } from "react-router";
+import { AuthContext } from "../Contexts/AuthContext";
+import Swal from "sweetalert2";
 
 const LoginPage = () => {
+  const { userLogin } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
     // handle login logic here
-    alert("Login submitted!");
+    userLogin(email, password)
+      .then((result) => {
+        console.log(result.user);
+        Swal.fire({
+          icon: "success",
+          title: "Sign in Successful!",
+          text: "Welcome back to the platform",
+          confirmButtonColor: "#6366f1",
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -25,8 +43,12 @@ const LoginPage = () => {
               Email
             </label>
             <div className="relative">
-              <Mail className="absolute left-3 top-2.5 text-gray-400" size={18} />
+              <Mail
+                className="absolute left-3 top-2.5 text-gray-400"
+                size={18}
+              />
               <input
+                name="email"
                 type="email"
                 required
                 placeholder="you@example.com"
@@ -41,8 +63,12 @@ const LoginPage = () => {
               Password
             </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-2.5 text-gray-400" size={18} />
+              <Lock
+                className="absolute left-3 top-2.5 text-gray-400"
+                size={18}
+              />
               <input
+                name="password"
                 type={showPassword ? "text" : "password"}
                 required
                 placeholder="Enter your password"

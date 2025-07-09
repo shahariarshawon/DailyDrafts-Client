@@ -1,21 +1,36 @@
-import { useState } from "react";
-import { Eye, EyeOff, Mail, Lock, User,CameraIcon } from "lucide-react";
+import { use, useState } from "react";
+import { Eye, EyeOff, Mail, Lock, User, CameraIcon } from "lucide-react";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
+import { AuthContext } from "../Contexts/AuthContext";
 
 const RegisterPage = () => {
+  const { createUser } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleRegister = (e) => {
     e.preventDefault();
-    const form=e.target;
-    const name=form.name.value;
-    const email=form.email.value;
-    const password=form.password.value;
-    const photo=form.photo.value;
-
-    console.log(name,email,password,photo);
-    alert("Registration submitted!");
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const photo = form.photo.value;
+    //firebase registration
+    createUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+       Swal.fire({
+              icon: "success",
+              title: "Registration Successful!",
+              text: "Welcome to the platform",
+              confirmButtonColor: "#6366f1",
+            });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(name, email, password, photo);
   };
 
   return (
@@ -32,7 +47,10 @@ const RegisterPage = () => {
               Full Name
             </label>
             <div className="relative">
-              <User className="absolute left-3 top-2.5 text-gray-400" size={18} />
+              <User
+                className="absolute left-3 top-2.5 text-gray-400"
+                size={18}
+              />
               <input
                 type="text"
                 name="name"
@@ -49,7 +67,10 @@ const RegisterPage = () => {
               Email
             </label>
             <div className="relative">
-              <Mail className="absolute left-3 top-2.5 text-gray-400" size={18} />
+              <Mail
+                className="absolute left-3 top-2.5 text-gray-400"
+                size={18}
+              />
               <input
                 type="email"
                 name="email"
@@ -66,9 +87,12 @@ const RegisterPage = () => {
               Password
             </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-2.5 text-gray-400" size={18} />
+              <Lock
+                className="absolute left-3 top-2.5 text-gray-400"
+                size={18}
+              />
               <input
-              name="password"
+                name="password"
                 type={showPassword ? "text" : "password"}
                 required
                 placeholder="Password"
@@ -89,9 +113,11 @@ const RegisterPage = () => {
               Confirm Password
             </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-2.5 text-gray-400" size={18} />
+              <Lock
+                className="absolute left-3 top-2.5 text-gray-400"
+                size={18}
+              />
               <input
-              name="password"
                 type={showConfirmPassword ? "text" : "password"}
                 required
                 placeholder="Re-enter password"
@@ -112,9 +138,12 @@ const RegisterPage = () => {
               User Icon
             </label>
             <div className="relative">
-              <CameraIcon className="absolute left-3 top-2.5 text-gray-400" size={18} />
+              <CameraIcon
+                className="absolute left-3 top-2.5 text-gray-400"
+                size={18}
+              />
               <input
-              name="photo"
+                name="photo"
                 type="url"
                 required
                 placeholder="User Icon's PhotoURL"
