@@ -8,7 +8,13 @@ const RegisterPage = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    // handle registration logic
+    const form=e.target;
+    const name=form.name.value;
+    const email=form.email.value;
+    const password=form.password.value;
+    const photo=form.photo.value;
+
+    console.log(name,email,password,photo);
     alert("Registration submitted!");
   };
 
@@ -29,6 +35,7 @@ const RegisterPage = () => {
               <User className="absolute left-3 top-2.5 text-gray-400" size={18} />
               <input
                 type="text"
+                name="name"
                 required
                 placeholder="Your full name"
                 className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-400"
@@ -45,6 +52,7 @@ const RegisterPage = () => {
               <Mail className="absolute left-3 top-2.5 text-gray-400" size={18} />
               <input
                 type="email"
+                name="email"
                 required
                 placeholder="you@example.com"
                 className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-400"
@@ -60,6 +68,7 @@ const RegisterPage = () => {
             <div className="relative">
               <Lock className="absolute left-3 top-2.5 text-gray-400" size={18} />
               <input
+              name="password"
                 type={showPassword ? "text" : "password"}
                 required
                 placeholder="Password"
@@ -82,6 +91,7 @@ const RegisterPage = () => {
             <div className="relative">
               <Lock className="absolute left-3 top-2.5 text-gray-400" size={18} />
               <input
+              name="password"
                 type={showConfirmPassword ? "text" : "password"}
                 required
                 placeholder="Re-enter password"
@@ -104,7 +114,8 @@ const RegisterPage = () => {
             <div className="relative">
               <CameraIcon className="absolute left-3 top-2.5 text-gray-400" size={18} />
               <input
-                type="text"
+              name="photo"
+                type="url"
                 required
                 placeholder="User Icon's PhotoURL"
                 className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-400"

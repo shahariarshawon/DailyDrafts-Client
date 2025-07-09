@@ -51,7 +51,7 @@ const Footer = () => {
         </div>
 
         {/* Newsletter */}
-        <div>
+        <div className="inline-block md:hidden lg:inline-block">
           <h3 className="text-lg font-semibold mb-3 text-gray-800">Newsletter</h3>
           <p className="text-sm mb-3 text-gray-600">Get the latest updates and posts directly to your inbox.</p>
           <form className="flex flex-col sm:flex-row items-center gap-2">
