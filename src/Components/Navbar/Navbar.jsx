@@ -2,9 +2,26 @@ import { Menu, User } from "lucide-react";
 import { use } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../../Contexts/AuthContext";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
-  const { user } = use(AuthContext);
+  const { user,userLogout } = use(AuthContext);
+  const handleLogout=()=>{
+    userLogout()
+    .then(()=>{
+      Swal.fire({
+          icon: "info",
+          title: "Logged Out",
+          text: "You have been successfully logged out.",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
+
+  }
   return (
     <div className="navbar bg-white px-4 py-2 ">
       {/* Navbar Start */}
@@ -80,13 +97,18 @@ const Navbar = () => {
       {/* Navbar End */}
       <div className="navbar-end space-x-2 md:space-x-3">
         {user ? (
+          <>
           <div className="w-9 md:w-10 rounded-full ring ring-indigo-400 ring-offset-base-100 ring-offset-2">
             <img
               className="rounded-full"
               alt="User Avatar"
               src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
             />
+            
+          </div>
+          <div>
             <button
+            onClick={handleLogout}
               className="relative mr-5 inline-block px-4 md:px-5 py-1.5 md:py-2 font-medium group border-2 border-indigo-600 text-indigo-600 rounded-md overflow-hidden text-sm md:text-base"
             >
               <span className="absolute w-full h-0 transition-all duration-300 ease-in-out bg-indigo-600 top-1/2 left-0 group-hover:h-full group-hover:top-0 z-0" />
@@ -95,6 +117,7 @@ const Navbar = () => {
               </span>
             </button>
           </div>
+          </>
         ) : (
           <div>
             {/* Login Button */}
