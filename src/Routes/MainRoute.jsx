@@ -3,6 +3,7 @@ import MainLayout from "../Layouts/MainLayout";
 import Homepage from "../Pages/Homepage";
 import LoginPage from "../Pages/LoginPage";
 import RegisterPage from "../Pages/RegisterPage";
+import AddForm from "../Pages/AddForm";
 
 export const router=createBrowserRouter(
     [
@@ -21,6 +22,10 @@ export const router=createBrowserRouter(
                 {
                     path:'/register',
                     Component:RegisterPage,
+                }
+                ,{
+                    path:"/add-blog",
+                    Component:AddForm,
                 }
             ]
         }
