@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Pencil, MessageCircle } from "lucide-react";
 import { AuthContext } from "../../Contexts/AuthContext";
 import { toast } from "react-toastify";
@@ -33,7 +33,7 @@ const handleSubmitComment = (e) => {
     comment: commentText,
     createdAt: new Date().toISOString(),
   };
-
+//sending comment to the database
   fetch("http://localhost:3000/comments", {
     method: "POST",
     headers: {
@@ -43,14 +43,27 @@ const handleSubmitComment = (e) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      toast.success("Comment posted successfully!");
-      e.target.reset(); // Clear the textarea
-    })
+  toast.success("Comment posted successfully!");
+  e.target.reset();
+  // Re-fetch comments
+  fetch(`http://localhost:3000/comments?blogId=${_id}`)
+    .then(res => res.json())
+    .then(data => setComments(data));
+})
     .catch((error) => {
     //   console.error("Comment post failed:", err);
       toast.error("Failed to post comment.");
     });
 };
+//getting the comment by blogId
+const [comments, setComments] = useState([]);
+
+useEffect(() => {
+  fetch(`http://localhost:3000/comments?blogId=${_id}`)
+    .then(res => res.json())
+    .then(data => setComments(data))
+    .catch(err => console.error("Failed to fetch comments", err));
+}, [_id]);
 
   const isOwner = user && user.email === email;
 
@@ -150,26 +163,32 @@ const handleSubmitComment = (e) => {
 
         {/* Comments List */}
         <div className="space-y-6 mt-6">
-          {[1, 2, 3].map((_, index) => (
-            <div
-              key={index}
-              className="flex gap-5 items-start bg-slate-50 p-5 rounded-lg shadow-sm"
-            >
-              <img
-                src="https://via.placeholder.com/40"
-                alt="User"
-                className="w-10 h-10 rounded-full object-cover"
-              />
-              <div>
-                <p className="font-semibold text-slate-900 text-sm">
-                  Commenter Name
-                </p>
-                <p className="text-slate-600 mt-1 text-sm">
-                  This is a sample comment.
-                </p>
-              </div>
-            </div>
-          ))}
+          {comments.length > 0 ? (
+  comments.map((comment, index) => (
+    <div
+      key={index}
+      className="flex gap-5 items-start bg-slate-50 p-5 rounded-lg shadow-sm"
+    >
+      <img
+        src={comment.commenterPhoto || "https://via.placeholder.com/40"}
+        alt="User"
+        className="w-10 h-10 rounded-full object-cover"
+      />
+      <div>
+        <p className="font-semibold text-slate-900 text-sm">
+          {comment.commenterName || "Anonymous"}
+        </p>
+        <p className="text-slate-600 mt-1 text-sm">{comment.comment}</p>
+        <p className="text-slate-400 text-xs mt-1">
+          {new Date(comment.createdAt).toLocaleString()}
+        </p>
+      </div>
+    </div>
+  ))
+) : (
+  <p className="text-sm italic text-slate-500">No comments yet.</p>
+)}
+
         </div>
       </section>
     </div>
