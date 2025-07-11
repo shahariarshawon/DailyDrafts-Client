@@ -1,31 +1,53 @@
-import React, { useState } from "react";
+import React from "react";
+import { toast } from "react-toastify";
 
 const AddForm = () => {
-  const [formData, setFormData] = useState({
-    title: "",
-    imageUrl: "",
-    category: "",
-    shortDesc: "",
-    longDesc: "",
-  });
+  const categories = [
+    "Technology",
+    "Health",
+    "Lifestyle",
+    "Travel",
+    "Education",
+  ];
 
-  const categories = ["Technology", "Health", "Lifestyle", "Travel", "Education"];
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmitForm = (e) => {
     e.preventDefault();
-    console.log("Submitted Blog:", formData);
-    // You can integrate this with Firebase, MongoDB, etc.
+    const form = e.target;
+    const blogTitle = form.title.value;
+    const blogImage = form.photoURL.value;
+    const blogCategory = form.category.value;
+    const shortDescription = form.shortDes.value;
+    const longDescription = form.longDes.value;
+    const blogData={
+      blogTitle,
+      blogImage,
+      blogCategory,
+      shortDescription,
+      longDescription
+    };
+    //sending data to the database
+    fetch('http://localhost:3000/blogs',{
+      method:"POST",
+      headers:{
+        "content-type":"application/json",
+      },
+      body:JSON.stringify(blogData)
+    })
+    .then(res=>res.json()
+    )
+    .then(data=>{
+      console.log("After databse",data);
+    })
+    toast.success("Blog Submitted Successfully!", {
+            position: "top-right",
+            autoClose:'2000'
+          });
   };
 
   return (
     <div className="pt-40 flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 px-4 py-10">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmitForm}
         className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-3xl space-y-6 border border-purple-200"
       >
         <h2 className="text-3xl font-bold text-center text-purple-600 mb-6 animate-fade-in-up">
@@ -34,12 +56,13 @@ const AddForm = () => {
 
         {/* Title */}
         <div className="flex flex-col">
-          <label className="mb-1 font-semibold text-purple-700">Blog Title</label>
+          <label className="mb-1 font-semibold text-purple-700">
+            Blog Title
+          </label>
           <input
             type="text"
             name="title"
-            value={formData.title}
-            onChange={handleChange}
+            // value={title}
             placeholder="Enter blog title"
             className="p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all"
             required
@@ -48,12 +71,13 @@ const AddForm = () => {
 
         {/* Image URL */}
         <div className="flex flex-col">
-          <label className="mb-1 font-semibold text-purple-700">Image URL</label>
+          <label className="mb-1 font-semibold text-purple-700">
+            Image URL
+          </label>
           <input
             type="url"
-            name="imageUrl"
-            value={formData.imageUrl}
-            onChange={handleChange}
+            name="photoURL"
+            // value={formData.imageUrl}
             placeholder="https://example.com/image.jpg"
             className="p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-pink-400 focus:outline-none transition-all"
             required
@@ -65,8 +89,7 @@ const AddForm = () => {
           <label className="mb-1 font-semibold text-purple-700">Category</label>
           <select
             name="category"
-            value={formData.category}
-            onChange={handleChange}
+            // value={formData.category}
             className="p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all"
             required
           >
@@ -81,12 +104,13 @@ const AddForm = () => {
 
         {/* Short Description */}
         <div className="flex flex-col">
-          <label className="mb-1 font-semibold text-purple-700">Short Description</label>
+          <label className="mb-1 font-semibold text-purple-700">
+            Short Description
+          </label>
           <input
             type="text"
-            name="shortDesc"
-            value={formData.shortDesc}
-            onChange={handleChange}
+            name="shortDes"
+            // value={formData.shortDesc}
             placeholder="A brief summary of your blog"
             className="p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-green-400 focus:outline-none transition-all"
             required
@@ -95,11 +119,12 @@ const AddForm = () => {
 
         {/* Long Description */}
         <div className="flex flex-col">
-          <label className="mb-1 font-semibold text-purple-700">Long Description</label>
+          <label className="mb-1 font-semibold text-purple-700">
+            Long Description
+          </label>
           <textarea
-            name="longDesc"
-            value={formData.longDesc}
-            onChange={handleChange}
+            name="longDes"
+            // value={formData.longDesc}
             rows="5"
             placeholder="Write your full blog content here..."
             className="p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none transition-all resize-none"
