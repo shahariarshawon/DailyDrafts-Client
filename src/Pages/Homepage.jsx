@@ -9,7 +9,7 @@ const Homepage = () => {
   return (
     <div>
       <Banner></Banner>
-      <RecentBlogs></RecentBlogs>
+      {/* <RecentBlogs></RecentBlogs> */}
       <TopAuthors></TopAuthors>
       <Newsletter></Newsletter>
       <Testimonials></Testimonials>

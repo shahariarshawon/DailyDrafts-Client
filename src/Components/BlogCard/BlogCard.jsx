@@ -2,9 +2,17 @@ import React from "react";
 import { Heart, Share2, MoreVertical } from "lucide-react";
 import { Link } from "react-router";
 
-const BlogCard = ({blog}) => {
-  const { title, _id, photoURL, category, shortDes, userName, createdAt } =
-    blog;
+const BlogCard = ({ blog }) => {
+  const {
+    title,
+    _id,
+    photoURL,
+    category,
+    shortDes,
+    userName,
+    createdAt,
+    userPhoto,
+  } = blog;
   // console.log("blog", blog);
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-purple-300 transition duration-300 overflow-hidden group hover:-translate-y-1">
@@ -40,12 +48,13 @@ const BlogCard = ({blog}) => {
 
         <div className="flex justify-between items-center pt-4">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-purple-200 text-purple-700 font-semibold flex items-center justify-center rounded-full">
-              {/* {user.photoURL} */}
-            </div>
+            <img
+              src={userPhoto}
+              alt={userName}
+              className="w-8 h-8 rounded-full object-cover border-2 border-purple-300"
+            />
             <div className="text-sm">
               <p className="text-gray-800">{userName}</p>
-
               <p className="text-gray-400 text-xs">
                 {new Date(createdAt).toLocaleString()}
               </p>
@@ -53,7 +62,7 @@ const BlogCard = ({blog}) => {
           </div>
 
           <Link
-            to="/blog-details"
+            to={`/blog-details/${_id}`}
             className="text-purple-600 font-medium hover:text-purple-800 transition"
           >
             Read More →

@@ -1,9 +1,10 @@
 import React, { use } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../Contexts/AuthContext";
+import Loader from "../Components/Loader/Loader";
 
 const AddForm = () => {
-  const {user}=use(AuthContext);
+  const { user,loading } = use(AuthContext);
   const categories = [
     "Technology",
     "Health",
@@ -11,30 +12,35 @@ const AddForm = () => {
     "Travel",
     "Education",
   ];
+// handle loading state
+if (loading || !user) {
+  return <Loader />;
+}
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
     const form = e.target;
-     const formData = new FormData(form);
+    const formData = new FormData(form);
     const blogData = Object.fromEntries(formData);
     console.log(blogData);
     //sending data to the database
-    fetch('http://localhost:3000/blogs',{
-      method:"POST",
-      headers:{
-        "content-type":"application/json",
+    fetch("http://localhost:3000/blogs", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
       },
-      body:JSON.stringify(blogData)
+      body: JSON.stringify(blogData),
     })
-    .then(res=>res.json()
-    )
-    .then(data=>{
-      console.log("After databse",data);
-    })
-    toast.success("Blog Submitted Successfully!", {
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("After databse", data);
+         if (data.insertedId) {
+          toast.success("Post Submitted Successfully!", {
             position: "top-right",
             autoClose:'2000'
           });
+        }
+      });
   };
 
   return (
@@ -70,8 +76,8 @@ const AddForm = () => {
           <input
             type="url"
             name="photoURL"
-            // value={formData.imageUrl}
-            placeholder="https://example.com/image.jpg"
+            // value={"https://i.postimg.cc/Hs90BBRX/image.png"}
+            placeholder="blog image"
             className="p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-pink-400 focus:outline-none transition-all"
             required
           />
@@ -124,7 +130,7 @@ const AddForm = () => {
             required
           ></textarea>
         </div>
-            {/* Poster Photo URL */}
+        {/* Poster Photo URL */}
         <div>
           <label className="block text-sm font-medium mb-1">
             User Photo URL
@@ -140,16 +146,27 @@ const AddForm = () => {
           />
         </div>
         {/* poster name */}
-         <div>
-            <label className="block text-sm font-medium mb-1">User Name</label>
-            <input
-              type="text"
-              value={user.displayName}
-              readOnly
-              name="userName"
-              className="w-full bg-gray-100 border rounded-md px-4 py-2 text-gray-600 cursor-not-allowed"
-            />
-          </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">User Name</label>
+          <input
+            type="text"
+            defaultValue={user.displayName}
+            readOnly
+            name="userName"
+            className="w-full bg-gray-100 border rounded-md px-4 py-2 text-gray-600 cursor-not-allowed"
+          />
+        </div>
+        {/* poster email */}
+        <div>
+          <label className="block text-sm font-medium mb-1">User Email</label>
+          <input
+            type="email"
+            defaultValue={user.email}
+            name="email"
+            readOnly
+            className="w-full bg-gray-100 border rounded-md px-4 py-2 text-gray-600 cursor-not-allowed"
+          />
+        </div>
         {/* Submit Button */}
         <button
           type="submit"

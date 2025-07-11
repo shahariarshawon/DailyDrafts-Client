@@ -1,5 +1,5 @@
 import { Menu } from "lucide-react";
-import { NavLink } from "react-router";
+import {  NavLink, useNavigate } from "react-router";
 import { use } from "react";
 import { AuthContext } from "../../Contexts/AuthContext";
 import Swal from "sweetalert2";
@@ -7,7 +7,7 @@ import defaultUserIcon from "../../assets/defaultUserIcon.png"
 
 const Navbar = () => {
   const { user, userLogout } = use(AuthContext);
-
+const navigate=useNavigate();
   const handleLogout = () => {
     userLogout()
       .then(() => {
@@ -18,6 +18,7 @@ const Navbar = () => {
           timer: 2000,
           showConfirmButton: false,
         });
+        navigate("/login")
       })
       .catch((error) => {
         console.log(error);
