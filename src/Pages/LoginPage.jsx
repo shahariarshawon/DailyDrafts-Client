@@ -3,6 +3,7 @@ import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Contexts/AuthContext";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const { userLogin, googleLogin } = use(AuthContext);
@@ -24,13 +25,23 @@ const LoginPage = () => {
           confirmButtonColor: "#6366f1",
         });
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        toast.error("Can't find this account!", {
+                    position: "top-right",
+                    autoClose:'500'
+                  });
+      });
   };
 
   const handleLoginWithGoogle = () => {
     googleLogin()
       .then((result) => console.log(result))
-      .catch((error) => console.error(error));
+      .catch((error) => {
+         toast.error("Can't find this account!", {
+                    position: "top-right",
+                    autoClose:'500'
+                  });
+      });
   };
 
   return (

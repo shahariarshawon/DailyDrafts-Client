@@ -1,37 +1,97 @@
 import { use, useState } from "react";
 import { Eye, EyeOff, Mail, Lock, User, CameraIcon } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Contexts/AuthContext";
 
 const RegisterPage = () => {
-  const { createUser,googleLogin } = use(AuthContext);
+   const navigate = useNavigate();
+  const { createUser,googleLogin,setUser,updateUser } = use(AuthContext);
+  //password condition state
+  const [passError, setPassError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+const [matchingPassword,setMatchingPassword]=useState("");
   const handleRegister = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const password = form.password.value;
-    const photoURL = form.photoURL.value;
-    //firebase registration
-    createUser(email, password)
-      .then((result) => {
-        console.log(result.user);
-       Swal.fire({
-              icon: "success",
-              title: "Registration Successful!",
-              text: "Welcome to the platform",
-              confirmButtonColor: "#6366f1",
-            });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    console.log(name, email, password, photoURL);
+  e.preventDefault();
+  const form = e.target;
+  const name = form.name.value;
+  const email = form.email.value;
+  const password = form.password.value;
+  const photoURL = form.photoURL.value;
+  const confirmPassword = form.confirmPassword.value;
+
+  // Reset errors
+  setPassError("");
+  setMatchingPassword("");
+
+  // Password Validation
+  let error = "";
+  if (password.length < 6) {
+    error = "Password must be at least 6 characters.";
+  } else if (!/[A-Z]/.test(password)) {
+    error = "Password must contain at least one uppercase letter.";
+  } else if (!/[a-z]/.test(password)) {
+    error = "Password must contain at least one lowercase letter.";
+  } else if (!/[0-9]/.test(password)) {
+    error = "Password must contain at least one numeric character.";
+  } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    error = "Password must contain at least one special character.";
+  }
+
+  if (error) {
+    setPassError(error);
+    return;
+  }
+
+  // Password Match Check
+  if (password !== confirmPassword) {
+    setMatchingPassword("Passwords do not match.");
+    return;
+  }
+
+  // Proceed with registration
+  const userProfile = {
+    name,
+    email,
+    password,
+    photoURL,
   };
+
+  createUser(email, password)
+    .then((result) => {
+      const user = result.user;
+
+      updateUser({ displayName: name, photoURL: photoURL })
+        .then(() => {
+          setUser({ ...user, displayName: name, photoURL: photoURL });
+
+          // Save to DB
+          fetch("https://b11a10-server-side-shahariarshawon.vercel.app/users", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userProfile),
+          });
+
+          Swal.fire({
+            icon: "success",
+            title: "Registration Successful!",
+            text: "Welcome to the platform",
+            confirmButtonColor: "#6366f1",
+          });
+
+          navigate("/");
+        })
+        .catch((error) => {
+          console.error("Profile update error:", error);
+        });
+    })
+    .catch((error) => {
+      console.error("Create user error:", error);
+    });
+};
 //login with google
 const handleLoginWithGoogle = () => {
     googleLogin()
@@ -110,6 +170,9 @@ const handleLoginWithGoogle = () => {
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </div>
+              {passError && (
+              <p className="text-sm text-red-500 mt-1">{passError}</p>
+            )}
             </div>
           </div>
 
@@ -124,6 +187,7 @@ const handleLoginWithGoogle = () => {
                 size={18}
               />
               <input
+              name="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}
                 required
                 placeholder="Re-enter password"
@@ -135,6 +199,9 @@ const handleLoginWithGoogle = () => {
               >
                 {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </div>
+              {matchingPassword && (
+              <p className="text-sm text-red-500 mt-1">{matchingPassword}</p>
+            )}
             </div>
           </div>
 
