@@ -1,6 +1,7 @@
 import React, { use } from "react";
 import { Pencil, MessageCircle } from "lucide-react";
 import { AuthContext } from "../../Contexts/AuthContext";
+import { toast } from "react-toastify";
 
 const BlogDetailsCard = ({ blog }) => {
   const { user } = use(AuthContext);
@@ -14,12 +15,44 @@ const BlogDetailsCard = ({ blog }) => {
     createdAt,
     userPhoto,
     longDes,
-    userEmail,
+    email,
   } = blog;
+  console.log(blog);
 console.log("Current user:", user?.email);
-console.log("Blog owner:", blog?.userEmail);
+console.log("Blog owner:", email);
+//sending comments to the database
+const handleSubmitComment = (e) => {
+  e.preventDefault();
+  const commentText = e.target.comment.value;
 
-  const isOwner = user && user.email === userEmail;
+  const commentData = {
+    blogId: _id, // Add blog ID to identify where the comment belongs
+    commenterName: user.displayName,
+    commenterEmail: user.email,
+    commenterPhoto: user.photoURL,
+    comment: commentText,
+    createdAt: new Date().toISOString(),
+  };
+
+  fetch("http://localhost:3000/comments", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(commentData),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      toast.success("Comment posted successfully!");
+      e.target.reset(); // Clear the textarea
+    })
+    .catch((error) => {
+    //   console.error("Comment post failed:", err);
+      toast.error("Failed to post comment.");
+    });
+};
+
+  const isOwner = user && user.email === email;
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-12 bg-white rounded-xl shadow-lg">
@@ -66,13 +99,19 @@ console.log("Blog owner:", blog?.userEmail);
 
       {/* Update Button: Only blog owner can see */}
       {isOwner && (
-        <div className="mb-12 flex justify-end">
-          <button className="flex items-center gap-2 px-5 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-lg shadow-md transition">
-            <Pencil size={20} />
-            Update Blog
-          </button>
-        </div>
-      )}
+  <div className="mb-12 flex justify-end gap-4">
+    <button className="flex items-center gap-2 px-5 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-lg shadow-md transition">
+      <Pencil size={20} />
+      Update Blog
+    </button>
+    <button
+    //   onClick={() => handleDelete(_id)}
+      className="flex items-center gap-2 px-5 py-3 bg-red-500 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md transition"
+    >
+      🗑️ Delete Blog
+    </button>
+  </div>
+)}
 
       {/* Comment Section */}
       <section className="space-y-8">
@@ -89,16 +128,18 @@ console.log("Blog owner:", blog?.userEmail);
                 You cannot comment on your own blog post.
               </p>
             ) : (
-              <>
+              <form onSubmit={handleSubmitComment}>
                 <textarea
                   rows="4"
+                  name="comment"
                   className="w-full border border-slate-300 rounded-lg p-4 focus:outline-none focus:ring-4 focus:ring-cyan-300 resize-none placeholder:text-slate-400"
                   placeholder="Write your comment here..."
                 />
-                <button className="mt-3 px-6 py-3 rounded-md font-semibold text-white bg-cyan-600 hover:bg-cyan-700 transition">
+                <button
+                 type="submit" className="mt-3 px-6 py-3 rounded-md font-semibold text-white bg-cyan-600 hover:bg-cyan-700 transition">
                   Submit Comment
                 </button>
-              </>
+              </form>
             )
           ) : (
             <p className="text-orange-600 font-semibold italic">

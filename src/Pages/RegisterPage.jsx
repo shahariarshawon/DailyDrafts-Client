@@ -67,7 +67,7 @@ const [matchingPassword,setMatchingPassword]=useState("");
           setUser({ ...user, displayName: name, photoURL: photoURL });
 
           // Save to DB
-          fetch("https://b11a10-server-side-shahariarshawon.vercel.app/users", {
+          fetch("http://localhost:3000/users", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
