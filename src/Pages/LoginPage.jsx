@@ -1,11 +1,11 @@
-import { use, useState } from "react";
+import React, { use, useState } from "react";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { Link } from "react-router";
-import { AuthContext } from "../Contexts/AuthContext";
 import Swal from "sweetalert2";
+import { AuthContext } from "../Contexts/AuthContext";
 
 const LoginPage = () => {
-  const { userLogin } = use(AuthContext);
+  const { userLogin, googleLogin } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
@@ -13,10 +13,10 @@ const LoginPage = () => {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    // handle login logic here
+
     userLogin(email, password)
       .then((result) => {
-        console.log(result.user);
+        console.log(result)
         Swal.fire({
           icon: "success",
           title: "Sign in Successful!",
@@ -24,81 +24,93 @@ const LoginPage = () => {
           confirmButtonColor: "#6366f1",
         });
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.error(error));
+  };
+
+  const handleLoginWithGoogle = () => {
+    googleLogin()
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-violet-100 to-rose-100 p-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
-        <h2 className="text-3xl font-bold text-center text-violet-600 mb-6">
-          Welcome Back
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-100 to-pink-100 p-6">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+        <h2 className="text-3xl font-bold text-center text-purple-600 mb-6">
+          Sign In to Your Account
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Email Field */}
+          {/* Email */}
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">
-              Email
-            </label>
+            <label className="block mb-1 text-sm font-medium text-gray-700">Email</label>
             <div className="relative">
-              <Mail
-                className="absolute left-3 top-2.5 text-gray-400"
-                size={18}
-              />
+              <Mail className="absolute left-3 top-3 text-gray-400" size={18} />
               <input
                 name="email"
                 type="email"
                 required
+                className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                 placeholder="you@example.com"
-                className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500"
               />
             </div>
           </div>
 
-          {/* Password Field */}
+          {/* Password */}
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">
-              Password
-            </label>
+            <label className="block mb-1 text-sm font-medium text-gray-700">Password</label>
             <div className="relative">
-              <Lock
-                className="absolute left-3 top-2.5 text-gray-400"
-                size={18}
-              />
+              <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
               <input
                 name="password"
                 type={showPassword ? "text" : "password"}
                 required
-                placeholder="Enter your password"
-                className="pl-10 pr-10 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500"
+                className="pl-10 pr-10 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                placeholder="••••••••"
               />
               <div
-                className="absolute right-3 top-2.5 cursor-pointer text-gray-500"
                 onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-3 text-gray-500 cursor-pointer"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </div>
             </div>
           </div>
 
-          {/* Submit Button */}
+          {/* Submit */}
           <button
             type="submit"
-            className="w-full py-2 rounded-md text-white bg-violet-600 hover:bg-violet-700 transition font-medium"
+            className="w-full py-2 rounded-md text-white bg-purple-600 hover:bg-purple-700 transition font-semibold"
           >
             Login
           </button>
         </form>
 
-        {/* Footer Links */}
-        <div className="mt-4 text-sm text-center text-gray-600">
+        <div className="mt-5 text-center text-sm text-gray-600">
           Don’t have an account?{" "}
-          <Link to="/register" className="text-rose-500 hover:underline">
+          <Link to="/register" className="text-purple-600 hover:underline font-medium">
             Register
           </Link>
         </div>
+
+        <div className="my-6 flex items-center justify-center gap-2 text-gray-400 text-sm">
+          <hr className="w-1/4 border-gray-300" />
+          OR
+          <hr className="w-1/4 border-gray-300" />
+        </div>
+
+        {/* Google Button */}
+        <button
+          onClick={handleLoginWithGoogle}
+          className="w-full py-2 border border-gray-300 rounded-md flex items-center justify-center gap-2 hover:bg-gray-100 transition"
+        >
+          <img
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            alt="Google"
+            className="w-5 h-5"
+          />
+          <span className="text-sm font-medium text-gray-700">Continue with Google</span>
+        </button>
       </div>
     </div>
   );

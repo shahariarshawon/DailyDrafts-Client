@@ -1,11 +1,12 @@
 import { Menu } from "lucide-react";
 import { NavLink } from "react-router";
-import { useContext } from "react";
+import { use } from "react";
 import { AuthContext } from "../../Contexts/AuthContext";
 import Swal from "sweetalert2";
+import defaultUserIcon from "../../assets/defaultUserIcon.png"
 
 const Navbar = () => {
-  const { user, userLogout } = useContext(AuthContext);
+  const { user, userLogout } = use(AuthContext);
 
   const handleLogout = () => {
     userLogout()
@@ -115,12 +116,13 @@ const Navbar = () => {
       <div className="navbar-end space-x-2 md:space-x-3">
         {user ? (
           <>
-            <div className="w-9 md:w-10 rounded-full ring ring-indigo-400 ring-offset-base-100 ring-offset-2">
-              <img
-                className="rounded-full"
-                alt="User Avatar"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
+            <div
+              className={`avatar max-sm:hidden w-12`}
+              title={user.displayName}
+            >
+              <div className="mask mask-squircle w-10">
+                <img src={user?.photoURL || defaultUserIcon} />
+              </div>
             </div>
             <button
               onClick={handleLogout}

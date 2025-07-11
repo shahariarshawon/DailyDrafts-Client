@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../Contexts/AuthContext";
 
 const RegisterPage = () => {
-  const { createUser } = use(AuthContext);
+  const { createUser,googleLogin } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -31,6 +31,12 @@ const RegisterPage = () => {
         console.log(error);
       });
     console.log(name, email, password, photo);
+  };
+//login with google
+const handleLoginWithGoogle = () => {
+    googleLogin()
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -168,6 +174,24 @@ const RegisterPage = () => {
             Login
           </Link>
         </div>
+         <div className="my-6 flex items-center justify-center gap-2 text-gray-400 text-sm">
+          <hr className="w-1/4 border-gray-300" />
+          OR
+          <hr className="w-1/4 border-gray-300" />
+        </div>
+
+        {/* Google Button */}
+        <button
+          onClick={handleLoginWithGoogle}
+          className="w-full py-2 border border-gray-300 rounded-md flex items-center justify-center gap-2 hover:bg-gray-100 transition"
+        >
+          <img
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            alt="Google"
+            className="w-5 h-5"
+          />
+          <span className="text-sm font-medium text-gray-700">Continue with Google</span>
+        </button>
       </div>
     </div>
   );

@@ -19,8 +19,9 @@ const wishlistBlogs = [
 
 const Wishlist = () => {
   return (
-    <section className="pt-30 min-h-screen bg-gradient-to-br from-pink-50 to-violet-100 py-12 px-4">
-      <h1 className="text-4xl font-bold text-center text-fuchsia-700 mb-10"> My Wishlist</h1>
+    <section className=" pt-30 min-h-screen bg-gradient-to-br from-pink-50 to-violet-100 py-12 px-4">
+      <div className="w-3/4 mx-auto">
+        <h1 className="text-4xl font-bold text-center text-fuchsia-700 mb-10"> My Wishlist</h1>
       {wishlistBlogs.length === 0 ? (
         <p className="text-center text-gray-500 text-lg">You haven’t added any blogs to your wishlist yet.</p>
       ) : (
@@ -30,6 +31,7 @@ const Wishlist = () => {
           ))}
         </div>
       )}
+      </div>
     </section>
   );
 };
