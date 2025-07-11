@@ -2,21 +2,16 @@ import React from "react";
 import { Heart, Share2, MoreVertical } from "lucide-react";
 import { Link } from "react-router";
 
-const BlogCard = ({
-  name = "Amelia Laurent",
-  date = "July 6, 2025",
-  image = "https://i.postimg.cc/8Cj99fgW/image.png",
-  avatar = "A",
-  blogTitle = "10 Daily Habits to Boost Your Productivity",
-  category = "Lifestyle",
-  shortDesc = "Discover how small changes in your routine can lead to massive improvements in your daily performance and well-being.",
-}) => {
+const BlogCard = ({blog}) => {
+  const { title, _id, photoURL, category, shortDes, userName, createdAt } =
+    blog;
+  // console.log("blog", blog);
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-purple-300 transition duration-300 overflow-hidden group hover:-translate-y-1">
       <div className="relative">
         <img
-          src={image}
-          alt={blogTitle}
+          src={photoURL}
+          alt={title}
           className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
         />
         <div className="absolute top-2 right-2 flex gap-2">
@@ -38,19 +33,22 @@ const BlogCard = ({
         </span>
 
         <h3 className="text-xl font-semibold text-gray-800 group-hover:text-purple-600 transition">
-          {blogTitle}
+          {title}
         </h3>
 
-        <p className="text-gray-600 text-sm">{shortDesc}</p>
+        <p className="text-gray-600 text-sm">{shortDes}</p>
 
         <div className="flex justify-between items-center pt-4">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-purple-200 text-purple-700 font-semibold flex items-center justify-center rounded-full">
-              {avatar}
+              {/* {user.photoURL} */}
             </div>
             <div className="text-sm">
-              <p className="text-gray-800">{name}</p>
-              <p className="text-gray-400 text-xs">{date}</p>
+              <p className="text-gray-800">{userName}</p>
+
+              <p className="text-gray-400 text-xs">
+                {new Date(createdAt).toLocaleString()}
+              </p>
             </div>
           </div>
 

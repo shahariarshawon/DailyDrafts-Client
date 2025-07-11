@@ -10,50 +10,51 @@ import Wishlist from "../Pages/Wishlist";
 import BlogDetails from "../Pages/BlogDetails";
 import ErrorPage from "../Pages/ErrorPage";
 
-export const router=createBrowserRouter(
-    [
-        {
-            path:"/",
-            Component:MainLayout,
-            
-            children:[
-                {
-                    index:true,
-                    Component:Homepage,
-                },
-                {
-                    path:'/login',
-                    Component:LoginPage,
-                },
-                {
-                    path:'/register',
-                    Component:RegisterPage,
-                }
-                ,{
-                    path:"/add-blog",
-                    Component:AddForm,
-                },
-                {
-                    path:"all-blogs",
-                    Component:AllBlogs,
-                },
-                {
-                    path:"featured-blogs",
-                    Component:FeaturedBlogs,
-                },
-                {
-                    path:"wishlist",
-                    Component:Wishlist,
-                },
-                {
-                    path:"blog-details",
-                    Component:BlogDetails,
-                },
-                {
-                    path:"*",
-                    Component:ErrorPage,
-                }
-            ]
-        }
-    ]
-)
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    Component: MainLayout,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        Component: Homepage,
+      },
+      {
+        path: "/login",
+        Component: LoginPage,
+      },
+      {
+        path: "/register",
+        Component: RegisterPage,
+      },
+      {
+        path: "/add-blog",
+        Component: AddForm,
+      },
+      {
+        path: "/all-blogs",
+        Component: AllBlogs,
+        loader: () => fetch("http://localhost:3000/blogs")
+      },
+      {
+        path: "featured-blogs",
+        Component: FeaturedBlogs,
+      },
+      {
+        path: "wishlist",
+        Component: Wishlist,
+      },
+      {
+        path: "blog-details/:id",
+        Component: BlogDetails,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/blogs/${params.id}`),
+      },
+      {
+        path: "*",
+        Component: ErrorPage,
+      },
+    ],
+  },
+]);

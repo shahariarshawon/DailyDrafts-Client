@@ -31,8 +31,8 @@ const FeaturedBlogs = () => {
     <section className="pt-30 min-h-screen bg-gradient-to-br from-violet-100 via-white to-pink-100 py-12 px-4">
       <h1 className="text-4xl font-bold text-center mb-10 text-violet-700"> Featured Blogs</h1>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
-        {featuredBlogs.map((id) => (
-          <BlogCard key={id}></BlogCard>
+        {featuredBlogs.map(() => (
+          <BlogCard ></BlogCard>
         ))}
       </div>
     </section>

@@ -15,7 +15,7 @@ const RegisterPage = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    const photo = form.photo.value;
+    const photoURL = form.photoURL.value;
     //firebase registration
     createUser(email, password)
       .then((result) => {
@@ -30,7 +30,7 @@ const RegisterPage = () => {
       .catch((error) => {
         console.log(error);
       });
-    console.log(name, email, password, photo);
+    console.log(name, email, password, photoURL);
   };
 //login with google
 const handleLoginWithGoogle = () => {
@@ -149,7 +149,7 @@ const handleLoginWithGoogle = () => {
                 size={18}
               />
               <input
-                name="photo"
+                name="photoURL"
                 type="url"
                 required
                 placeholder="User Icon's PhotoURL"

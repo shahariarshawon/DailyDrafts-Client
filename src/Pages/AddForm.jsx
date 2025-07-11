@@ -1,7 +1,9 @@
-import React from "react";
+import React, { use } from "react";
 import { toast } from "react-toastify";
+import { AuthContext } from "../Contexts/AuthContext";
 
 const AddForm = () => {
+  const {user}=use(AuthContext);
   const categories = [
     "Technology",
     "Health",
@@ -13,18 +15,9 @@ const AddForm = () => {
   const handleSubmitForm = (e) => {
     e.preventDefault();
     const form = e.target;
-    const blogTitle = form.title.value;
-    const blogImage = form.photoURL.value;
-    const blogCategory = form.category.value;
-    const shortDescription = form.shortDes.value;
-    const longDescription = form.longDes.value;
-    const blogData={
-      blogTitle,
-      blogImage,
-      blogCategory,
-      shortDescription,
-      longDescription
-    };
+     const formData = new FormData(form);
+    const blogData = Object.fromEntries(formData);
+    console.log(blogData);
     //sending data to the database
     fetch('http://localhost:3000/blogs',{
       method:"POST",
@@ -131,7 +124,32 @@ const AddForm = () => {
             required
           ></textarea>
         </div>
-
+            {/* Poster Photo URL */}
+        <div>
+          <label className="block text-sm font-medium mb-1">
+            User Photo URL
+          </label>
+          <input
+            type="url"
+            placeholder="https://example.com/photo.jpg"
+            name="userPhoto"
+            defaultValue={user.photoURL}
+            readOnly
+            className="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 cursor-not-allowed"
+            required
+          />
+        </div>
+        {/* poster name */}
+         <div>
+            <label className="block text-sm font-medium mb-1">User Name</label>
+            <input
+              type="text"
+              value={user.displayName}
+              readOnly
+              name="userName"
+              className="w-full bg-gray-100 border rounded-md px-4 py-2 text-gray-600 cursor-not-allowed"
+            />
+          </div>
         {/* Submit Button */}
         <button
           type="submit"
