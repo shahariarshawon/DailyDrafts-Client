@@ -44,7 +44,7 @@ const TopAuthors = () => {
       <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">Top Authors</h2>
       <div className="grid gap-8 md:grid-cols-3 text-center">
         {authors.map((author, idx) => (
-          <div key={idx} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition hover:shadow-violet-300">
+          <div key={idx} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition hover:shadow-violet-200">
             <img
               src={author.img}
               alt={author.name}

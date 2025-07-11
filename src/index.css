@@ -2,3 +2,8 @@
 @plugin "daisyui" {
   themes: all;
 }
+
+.roboto-slab {
+  font-family: "Roboto Slab", serif;
+ 
+}

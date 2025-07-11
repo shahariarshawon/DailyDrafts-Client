@@ -58,7 +58,7 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/featured" className={linkClass}>
+              <NavLink to="/featured-blogs" className={linkClass}>
                 Featured Blogs
               </NavLink>
             </li>
@@ -99,7 +99,7 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/featured" className={linkClass}>
+            <NavLink to="/featured-blogs" className={linkClass}>
               Featured Blogs
             </NavLink>
           </li>
