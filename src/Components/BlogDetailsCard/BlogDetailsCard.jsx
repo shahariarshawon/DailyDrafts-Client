@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from "react";
 import { Pencil, MessageCircle } from "lucide-react";
 import { AuthContext } from "../../Contexts/AuthContext";
 import { toast } from "react-toastify";
+import { Link } from "react-router";
 
 const BlogDetailsCard = ({ blog }) => {
   const { user } = use(AuthContext);
@@ -115,7 +116,7 @@ useEffect(() => {
   <div className="mb-12 flex justify-end gap-4">
     <button className="flex items-center gap-2 px-5 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-lg shadow-md transition">
       <Pencil size={20} />
-      Update Blog
+      <Link  to={`/update-post/${_id}`}>Update Blog</Link>
     </button>
     <button
     //   onClick={() => handleDelete(_id)}

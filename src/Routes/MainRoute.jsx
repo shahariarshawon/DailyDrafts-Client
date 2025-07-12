@@ -12,6 +12,7 @@ import ErrorPage from "../Pages/ErrorPage";
 import AuthLayout from "../Layouts/AuthLayout";
 import PrivateRoute from "./PrivateRoute";
 import FallbackElement from "../Components/FallbackElement/FallbackElement";
+import UpdateBlogPage from "../Pages/UpdateBlogPage";
 
 export const router = createBrowserRouter([
   {
@@ -53,9 +54,16 @@ export const router = createBrowserRouter([
         loader: ({ params }) =>fetch(`http://localhost:3000/blogs/${params.id}`),
       },
       {
+        path: "/update-post/:_id",
+        Component: UpdateBlogPage,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/blogs/${params._id}`),
+      },
+      {
         path: "*",
         Component: ErrorPage,
       },
+      
     ],
   },
   {
