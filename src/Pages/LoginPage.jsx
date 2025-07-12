@@ -1,6 +1,6 @@
-import React, { use, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Contexts/AuthContext";
 import { toast } from "react-toastify";
@@ -8,7 +8,18 @@ import { toast } from "react-toastify";
 const LoginPage = () => {
   const { userLogin, googleLogin } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
-
+// Sending user to the path where he wanted to go without login
+const location=useLocation()
+  useEffect(() => {
+    if (location.state?.needAuth) {
+      Swal.fire({
+        icon: "info",
+        title: "Authentication Required",
+        text: "Please log in to access that page.",
+        confirmButtonColor: "#6366f1",
+      });
+    }
+  }, [location.state]);
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
