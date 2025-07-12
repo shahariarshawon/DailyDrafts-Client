@@ -45,7 +45,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-100 to-pink-100 p-6">
+    <div className=" min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-100 to-pink-100 p-6">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         <h2 className="text-3xl font-bold text-center text-purple-600 mb-6">
           Sign In to Your Account
@@ -99,7 +99,7 @@ const LoginPage = () => {
 
         <div className="mt-5 text-center text-sm text-gray-600">
           Don’t have an account?{" "}
-          <Link to="/register" className="text-purple-600 hover:underline font-medium">
+          <Link to="/auth/register" className="text-purple-600 hover:underline font-medium">
             Register
           </Link>
         </div>

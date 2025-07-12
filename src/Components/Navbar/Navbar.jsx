@@ -18,7 +18,7 @@ const navigate=useNavigate();
           timer: 2000,
           showConfirmButton: false,
         });
-        navigate("/login")
+        navigate("/auth/login")
       })
       .catch((error) => {
         console.log(error);
@@ -138,7 +138,7 @@ const navigate=useNavigate();
         ) : (
           <div>
             <NavLink
-              to="/login"
+              to="/auth/login"
               className="relative mr-5 inline-block px-4 md:px-5 py-1.5 md:py-2 font-medium group border-2 border-indigo-600 text-indigo-600 rounded-md overflow-hidden text-sm md:text-base"
             >
               <span className="absolute w-full h-0 transition-all duration-300 ease-in-out bg-indigo-600 top-1/2 left-0 group-hover:h-full group-hover:top-0 z-0" />
@@ -148,7 +148,7 @@ const navigate=useNavigate();
             </NavLink>
 
             <NavLink
-              to="/register"
+              to="/auth/register"
               className="hidden md:inline-block relative px-4 md:px-5 py-1.5 md:py-2 font-medium group border-2 border-rose-500 text-rose-500 rounded-md overflow-hidden text-sm md:text-base"
             >
               <span className="absolute w-full h-0 transition-all duration-300 ease-in-out bg-rose-500 top-1/2 left-0 group-hover:h-full group-hover:top-0 z-0" />

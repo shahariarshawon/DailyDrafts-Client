@@ -237,7 +237,7 @@ const handleLoginWithGoogle = () => {
         {/* Footer */}
         <div className="mt-4 text-sm text-center text-gray-600">
           Already have an account?{" "}
-          <Link to="/login" className="text-violet-500 hover:underline">
+          <Link to="/auth/login" className="text-violet-500 hover:underline">
             Login
           </Link>
         </div>

@@ -9,11 +9,15 @@ import FeaturedBlogs from "../Pages/FeaturedBlogs";
 import Wishlist from "../Pages/Wishlist";
 import BlogDetails from "../Pages/BlogDetails";
 import ErrorPage from "../Pages/ErrorPage";
+import AuthLayout from "../Layouts/AuthLayout";
+import PrivateRoute from "./PrivateRoute";
+import FallbackElement from "../Components/FallbackElement/FallbackElement";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayout,
+    hydrateFallbackElement:<FallbackElement></FallbackElement>,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -21,16 +25,10 @@ export const router = createBrowserRouter([
         Component: Homepage,
       },
       {
-        path: "/login",
-        Component: LoginPage,
-      },
-      {
-        path: "/register",
-        Component: RegisterPage,
-      },
-      {
         path: "/add-blog",
-        Component: AddForm,
+        element:<PrivateRoute>
+          <AddForm></AddForm>
+        </PrivateRoute>
       },
       {
         path: "/all-blogs",
@@ -39,11 +37,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "featured-blogs",
-        Component: FeaturedBlogs,
+        element:<PrivateRoute>
+          <FeaturedBlogs></FeaturedBlogs>
+        </PrivateRoute>
       },
       {
         path: "wishlist",
-        Component: Wishlist,
+        element:<PrivateRoute>
+          <Wishlist></Wishlist>
+        </PrivateRoute>
       },
       {
         path: "blog-details/:id",
@@ -56,4 +58,19 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path:"/auth",
+    Component:AuthLayout,
+    hydrateFallbackElement:<FallbackElement></FallbackElement>,
+    children:[
+      {
+        path: "/auth/login",
+        Component: LoginPage,
+      },
+      {
+        path: "/auth/register",
+        Component: RegisterPage,
+      },
+    ]
+  }
 ]);
