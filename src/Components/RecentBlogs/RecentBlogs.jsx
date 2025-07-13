@@ -24,7 +24,7 @@ const RecentBlogs = () => {
     <section className="bg-gradient-to-b from-pink-50 to-purple-100 px-4 py-20 md:px-16">
       {/* Section Title */}
       <h2 className="text-4xl font-bold text-center text-purple-700 mb-12 animate-pulse">
-        ✨ Latest From Our Blog ✨
+        Fresh Reads
       </h2>
 
       {/* Blog Grid */}

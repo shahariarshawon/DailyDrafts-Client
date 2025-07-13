@@ -51,7 +51,7 @@ if (loading || !user) {
         onSubmit={handleSubmitForm}
         className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-3xl space-y-6 border border-purple-200"
       >
-        <h2 className="text-3xl font-bold text-center text-purple-600 mb-6 animate-fade-in-up">
+        <h2 className="text-4xl font-bold text-center text-purple-700 mb-12 animate-pulse">
           Submit Your Blog
         </h2>
 

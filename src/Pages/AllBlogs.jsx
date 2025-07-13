@@ -28,7 +28,7 @@ const AllBlogs = () => {
   return (
     <section className=" bg-gradient-to-br from-pink-50 to-violet-100 min-h-screen px-4 py-30 md:px-16">
       {/* Title */}
-      <h1 className="text-4xl font-bold text-center text-gray-800 mb-10">
+      <h1 className="text-4xl font-bold text-center text-purple-700 mb-12 animate-pulse">
         All Blog Posts
       </h1>
 

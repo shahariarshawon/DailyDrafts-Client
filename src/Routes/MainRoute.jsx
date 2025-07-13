@@ -55,7 +55,9 @@ export const router = createBrowserRouter([
       },
       {
         path: "/update-post/:_id",
-        Component: UpdateBlogPage,
+        element:<PrivateRoute>
+          <UpdateBlogPage></UpdateBlogPage>
+        </PrivateRoute>,
         loader: ({ params }) =>
           fetch(`http://localhost:3000/blogs/${params._id}`),
       },

@@ -9,7 +9,7 @@ import { Link } from "react-router";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-br from-violet-100 via-white to-violet-200 text-gray-700 pt-10 pb-6 px-6 lg:px-20  border-t border-gray-200">
+    <footer className="bg-gradient-to-br from-violet-100 via-white to-violet-200 text-gray-700 pt-10 pb-6 px-6 lg:px-20  border-t  border-blue-300">
       <div className=" w-3/4 mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
 
         {/* Logo + About */}
