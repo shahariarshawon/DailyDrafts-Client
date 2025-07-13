@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Heart, Share2, MoreVertical } from "lucide-react";
 import { Link } from "react-router";
+import { toast } from "react-toastify";
 
 const BlogCard = ({ blog }) => {
+  const [clicked, setClicked] = useState(false);
+
   const {
     title,
     _id,
@@ -13,7 +16,48 @@ const BlogCard = ({ blog }) => {
     createdAt,
     userPhoto,
   } = blog;
-  // console.log("blog", blog);
+
+  const handleWishlistBtnClick = async () => {
+    if (clicked) return; // ✅ Prevent double clicks
+
+    const wishlistItem = {
+      blogId: _id,
+      title,
+      photoURL,
+      category,
+      userName,
+      userPhoto,
+      createdAt,
+      shortDes,
+      addedAt: new Date(),
+    };
+
+    try {
+      const res = await fetch("http://localhost:3000/wishlist", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(wishlistItem),
+      });
+
+      const data = await res.json();
+
+      if (data.insertedId || data.acknowledged) {
+        setClicked(true);
+        toast.success("Added to wishlist!", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+      } else {
+        toast.error("Failed to add to wishlist!");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong!");
+    }
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-purple-300 transition duration-300 overflow-hidden group hover:-translate-y-1">
       <div className="relative">
@@ -23,9 +67,20 @@ const BlogCard = ({ blog }) => {
           className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
         />
         <div className="absolute top-2 right-2 flex gap-2">
-          <button className="bg-white p-2 rounded-full shadow hover:bg-purple-100">
-            <Heart size={18} className="text-pink-500" />
+          <button
+            onClick={handleWishlistBtnClick}
+            className={`bg-white p-2 rounded-full shadow hover:bg-purple-100 ${
+              clicked ? "bg-pink-100" : ""
+            }`}
+          >
+            <Heart
+              size={18}
+              className={`transition ${
+                clicked ? "fill-pink-500 text-pink-500" : "text-pink-500"
+              }`}
+            />
           </button>
+
           <button className="bg-white p-2 rounded-full shadow hover:bg-purple-100">
             <Share2 size={18} className="text-blue-500" />
           </button>
