@@ -23,6 +23,8 @@ if (loading || !user) {
     const formData = new FormData(form);
     const blogData = Object.fromEntries(formData);
     console.log(blogData);
+    blogData.createdAt=new Date();
+    console.log("hello gello",blogData);
     //sending data to the database
     fetch("http://localhost:3000/blogs", {
       method: "POST",
