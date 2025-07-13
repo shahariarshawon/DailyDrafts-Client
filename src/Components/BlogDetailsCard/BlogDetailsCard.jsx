@@ -2,9 +2,11 @@ import React, { use, useEffect, useState } from "react";
 import { Pencil, MessageCircle } from "lucide-react";
 import { AuthContext } from "../../Contexts/AuthContext";
 import { toast } from "react-toastify";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const BlogDetailsCard = ({ blog }) => {
+   const navigate = useNavigate(); 
   const { user } = use(AuthContext);
   const {
     title,
@@ -56,7 +58,6 @@ const handleSubmitComment = (e) => {
       toast.error("Failed to post comment.");
     });
 };
-//getting the comment by blogId
 const [comments, setComments] = useState([]);
 
 useEffect(() => {
@@ -65,6 +66,42 @@ useEffect(() => {
     .then(data => setComments(data))
     .catch(err => console.error("Failed to fetch comments", err));
 }, [_id]);
+//deleting blog 
+
+
+const handleDelete = (_id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fetch(`http://localhost:3000/blogs/${_id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            Swal.fire("Deleted!", "Your post has been deleted.", "success");
+            navigate("/all-blogs"); 
+          } else {
+            Swal.fire("Error!", "Failed to delete the post.", "error");
+          }
+        })
+        .catch(() => {
+          Swal.fire("Error!", "Something went wrong.", "error");
+        });
+    }
+  });
+};
+
+
+//getting the comment by blogId
+
 
   const isOwner = user && user.email === email;
 
@@ -119,7 +156,7 @@ useEffect(() => {
       <Link  to={`/update-post/${_id}`}>Update Blog</Link>
     </button>
     <button
-    //   onClick={() => handleDelete(_id)}
+      onClick={() => handleDelete(_id)}
       className="flex items-center gap-2 px-5 py-3 bg-red-500 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md transition"
     >
       🗑️ Delete Blog
