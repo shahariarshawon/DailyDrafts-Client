@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayout,
-    hydrateFallbackElement:<FallbackElement></FallbackElement>,
+    hydrateFallbackElement: <FallbackElement></FallbackElement>,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -27,37 +27,55 @@ export const router = createBrowserRouter([
       },
       {
         path: "/add-blog",
-        element:<PrivateRoute>
-          <AddForm></AddForm>
-        </PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <AddForm></AddForm>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/all-blogs",
         Component: AllBlogs,
-        loader: () => fetch("https://blog-server-khaki-eta.vercel.app/blogs")
+        loader: () => fetch("https://blog-server-khaki-eta.vercel.app/blogs"),
       },
       {
         path: "featured-blogs",
-        element:<PrivateRoute>
-          <FeaturedBlogs></FeaturedBlogs>
-        </PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <FeaturedBlogs></FeaturedBlogs>
+          </PrivateRoute>
+        ),
       },
       {
         path: "wishlist",
-        element:<PrivateRoute>
-          <Wishlist></Wishlist>
-        </PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <Wishlist></Wishlist>
+          </PrivateRoute>
+        ),
       },
       {
         path: "blog-details/:id",
         Component: BlogDetails,
-        loader: ({ params }) =>fetch(`https://blog-server-khaki-eta.vercel.app/blogs/${params.id}`),
+        loader: ({ params }) =>
+          fetch(`https://blog-server-khaki-eta.vercel.app/blogs/${params.id}`, {
+            credentials: "include", // <-- This makes fetch send cookies!
+          }).then((res) => {
+            if (!res.ok) {
+              throw new Response("Failed to load blog details", {
+                status: res.status,
+              });
+            }
+            return res.json();
+          }),
       },
       {
         path: "/update-post/:_id",
-        element:<PrivateRoute>
-          <UpdateBlogPage></UpdateBlogPage>
-        </PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <UpdateBlogPage></UpdateBlogPage>
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
           fetch(`https://blog-server-khaki-eta.vercel.app/blogs/${params._id}`),
       },
@@ -65,14 +83,13 @@ export const router = createBrowserRouter([
         path: "*",
         Component: ErrorPage,
       },
-      
     ],
   },
   {
-    path:"/auth",
-    Component:AuthLayout,
-    hydrateFallbackElement:<FallbackElement></FallbackElement>,
-    children:[
+    path: "/auth",
+    Component: AuthLayout,
+    hydrateFallbackElement: <FallbackElement></FallbackElement>,
+    children: [
       {
         path: "/auth/login",
         Component: LoginPage,
@@ -81,6 +98,6 @@ export const router = createBrowserRouter([
         path: "/auth/register",
         Component: RegisterPage,
       },
-    ]
-  }
+    ],
+  },
 ]);

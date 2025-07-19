@@ -31,7 +31,6 @@ if (loading || !user) {
       headers: {
         "content-type": "application/json",
       },
-      credentials:"include",
       body: JSON.stringify(blogData),
     })
       .then((res) => res.json())

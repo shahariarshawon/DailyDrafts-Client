@@ -40,6 +40,7 @@ const BlogDetailsCard = ({ blog }) => {
       headers: {
         "Content-Type": "application/json",
       },
+      
       body: JSON.stringify(commentData),
     })
       .then((res) => res.json())

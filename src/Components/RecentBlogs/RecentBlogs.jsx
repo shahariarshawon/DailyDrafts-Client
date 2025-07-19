@@ -7,7 +7,7 @@ const RecentBlogs = () => {
 
   useEffect(() => {
     fetch("https://blog-server-khaki-eta.vercel.app/blogs",{
- credentials:"include",
+ 
     }) 
    
       .then((res) => res.json())
