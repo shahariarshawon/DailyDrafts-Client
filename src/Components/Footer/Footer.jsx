@@ -42,10 +42,10 @@ const Footer = () => {
               <span>support@dailydrafts.com</span>
             </li>
             <li className="flex gap-3 mt-4">
-              <a href="#" className="hover:text-blue-600"><Facebook size={18} /></a>
-              <a href="#" className="hover:text-sky-500"><Twitter size={18} /></a>
-              <a href="#" className="hover:text-pink-500"><Instagram size={18} /></a>
-              <a href="#" className="hover:text-blue-800"><Linkedin size={18} /></a>
+              <a target="_blank" href="https://www.facebook.com/shahariar.arafat.497656/" className="hover:text-blue-600"><Facebook size={18} /></a>
+              <a target="_blank" href="https://x.com/Shahariarshaw11" className="hover:text-sky-500"><Twitter size={18} /></a>
+              <a target="_blank" href="https://www.instagram.com/shahariar_shawon_/" className="hover:text-pink-500"><Instagram size={18} /></a>
+              <a target="_blank" href="https://www.linkedin.com/in/al-shahariar-arafat-shawon-a02396259/" className="hover:text-blue-800"><Linkedin size={18} /></a>
             </li>
           </ul>
         </div>

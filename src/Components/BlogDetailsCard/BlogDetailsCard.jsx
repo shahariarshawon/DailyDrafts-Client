@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 const BlogDetailsCard = ({ blog }) => {
-   const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const { user } = use(AuthContext);
   const {
     title,
@@ -20,88 +20,83 @@ const BlogDetailsCard = ({ blog }) => {
     longDes,
     email,
   } = blog;
-  console.log(blog);
-console.log("Current user:", user?.email);
-console.log("Blog owner:", email);
-//sending comments to the database
-const handleSubmitComment = (e) => {
-  e.preventDefault();
-  const commentText = e.target.comment.value;
 
-  const commentData = {
-    blogId: _id, // Add blog ID to identify where the comment belongs
-    commenterName: user.displayName,
-    commenterEmail: user.email,
-    commenterPhoto: user.photoURL,
-    comment: commentText,
-    createdAt: new Date().toISOString(),
-  };
-//sending comment to the database
-  fetch("http://localhost:3000/comments", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(commentData),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-  toast.success("Comment posted successfully!");
-  e.target.reset();
-  // Re-fetch comments
-  fetch(`http://localhost:3000/comments?blogId=${_id}`)
-    .then(res => res.json())
-    .then(data => setComments(data));
-})
-    .catch((error) => {
-    //   console.error("Comment post failed:", err);
-      toast.error("Failed to post comment.");
-    });
-};
-const [comments, setComments] = useState([]);
+  //sending comments to the database
+  const handleSubmitComment = (e) => {
+    e.preventDefault();
+    const commentText = e.target.comment.value;
 
-useEffect(() => {
-  fetch(`http://localhost:3000/comments?blogId=${_id}`)
-    .then(res => res.json())
-    .then(data => setComments(data))
-    .catch(err => console.error("Failed to fetch comments", err));
-}, [_id]);
-//deleting blog 
-
-
-const handleDelete = (_id) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      fetch(`http://localhost:3000/blogs/${_id}`, {
-        method: "DELETE",
+    const commentData = {
+      blogId: _id, // Add blog ID to identify where the comment belongs
+      commenterName: user.displayName,
+      commenterEmail: user.email,
+      commenterPhoto: user.photoURL,
+      comment: commentText,
+      createdAt: new Date().toISOString(),
+    };
+    //sending comment to the database
+    fetch("http://localhost:3000/comments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(commentData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        toast.success("Comment posted successfully!");
+        e.target.reset();
+        // Re-fetch comments
+        fetch(`http://localhost:3000/comments?blogId=${_id}`)
+          .then((res) => res.json())
+          .then((data) => setComments(data));
       })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            Swal.fire("Deleted!", "Your post has been deleted.", "success");
-            navigate("/all-blogs"); 
-          } else {
-            Swal.fire("Error!", "Failed to delete the post.", "error");
-          }
+      .catch((error) => {
+          console.error("Comment post failed:", error);
+        toast.error("Failed to post comment.");
+      });
+  };
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/comments?blogId=${_id}`)
+      .then((res) => res.json())
+      .then((data) => setComments(data))
+      .catch((err) => console.error("Failed to fetch comments", err));
+  }, [_id]);
+  //deleting blog
+
+  const handleDelete = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/blogs/${_id}`, {
+          method: "DELETE",
         })
-        .catch(() => {
-          Swal.fire("Error!", "Something went wrong.", "error");
-        });
-    }
-  });
-};
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success) {
+              Swal.fire("Deleted!", "Your post has been deleted.", "success");
+              navigate("/all-blogs");
+            } else {
+              Swal.fire("Error!", "Failed to delete the post.", "error");
+            }
+          })
+          .catch(() => {
+            Swal.fire("Error!", "Something went wrong.", "error");
+          });
+      }
+    });
+  };
 
-
-//getting the comment by blogId
-
+  //getting the comment by blogId
 
   const isOwner = user && user.email === email;
 
@@ -150,19 +145,19 @@ const handleDelete = (_id) => {
 
       {/* Update Button: Only blog owner can see */}
       {isOwner && (
-  <div className="mb-12 flex justify-end gap-4">
-    <button className="flex items-center gap-2 px-5 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-lg shadow-md transition">
-      <Pencil size={20} />
-      <Link  to={`/update-post/${_id}`}>Update Blog</Link>
-    </button>
-    <button
-      onClick={() => handleDelete(_id)}
-      className="flex items-center gap-2 px-5 py-3 bg-red-500 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md transition"
-    >
-      🗑️ Delete Blog
-    </button>
-  </div>
-)}
+        <div className="mb-12 flex justify-end gap-4">
+          <button className="flex items-center gap-2 px-5 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-lg shadow-md transition">
+            <Pencil size={20} />
+            <Link to={`/update-post/${_id}`}>Update Blog</Link>
+          </button>
+          <button
+            onClick={() => handleDelete(_id)}
+            className="flex items-center gap-2 px-5 py-3 bg-red-500 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md transition"
+          >
+            🗑️ Delete Blog
+          </button>
+        </div>
+      )}
 
       {/* Comment Section */}
       <section className="space-y-8">
@@ -187,7 +182,9 @@ const handleDelete = (_id) => {
                   placeholder="Write your comment here..."
                 />
                 <button
-                 type="submit" className="mt-3 px-6 py-3 rounded-md font-semibold text-white bg-cyan-600 hover:bg-cyan-700 transition">
+                  type="submit"
+                  className="mt-3 px-6 py-3 rounded-md font-semibold text-white bg-cyan-600 hover:bg-cyan-700 transition"
+                >
                   Submit Comment
                 </button>
               </form>
@@ -202,31 +199,34 @@ const handleDelete = (_id) => {
         {/* Comments List */}
         <div className="space-y-6 mt-6">
           {comments.length > 0 ? (
-  comments.map((comment, index) => (
-    <div
-      key={index}
-      className="flex gap-5 items-start bg-slate-50 p-5 rounded-lg shadow-sm"
-    >
-      <img
-        src={comment.commenterPhoto || "https://via.placeholder.com/40"}
-        alt="User"
-        className="w-10 h-10 rounded-full object-cover"
-      />
-      <div>
-        <p className="font-semibold text-slate-900 text-sm">
-          {comment.commenterName || "Anonymous"}
-        </p>
-        <p className="text-slate-600 mt-1 text-sm">{comment.comment}</p>
-        <p className="text-slate-400 text-xs mt-1">
-          {new Date(comment.createdAt).toLocaleString()}
-        </p>
-      </div>
-    </div>
-  ))
-) : (
-  <p className="text-sm italic text-slate-500">No comments yet.</p>
-)}
-
+            comments.map((comment, index) => (
+              <div
+                key={index}
+                className="flex gap-5 items-start bg-slate-50 p-5 rounded-lg shadow-sm"
+              >
+                <img
+                  src={
+                    comment.commenterPhoto || "https://via.placeholder.com/40"
+                  }
+                  alt="User"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <div>
+                  <p className="font-semibold text-slate-900 text-sm">
+                    {comment.commenterName || "Anonymous"}
+                  </p>
+                  <p className="text-slate-600 mt-1 text-sm">
+                    {comment.comment}
+                  </p>
+                  <p className="text-slate-400 text-xs mt-1">
+                    {new Date(comment.createdAt).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-sm italic text-slate-500">No comments yet.</p>
+          )}
         </div>
       </section>
     </div>

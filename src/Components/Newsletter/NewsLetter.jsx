@@ -8,7 +8,7 @@ const Newsletter = () => {
    Swal.fire("Thank you for subscribing to our newsletter");
   }
   return (
-    <div className="w-3/4 mx-auto bg-white py-16 mt-10 px-4 sm:px-6 lg:px-8">
+    <div className="w-3/4 mx-auto bg-white py-16 mt-10 px-4 sm:px-6 lg:px-8 rounded-lg">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-10">
         <div>
           <img
@@ -24,7 +24,7 @@ const Newsletter = () => {
           </p>
           <form
           onSubmit={handleNewsletterSubmit}
-           className="mt-6 flex flex-col sm:flex-row gap-4">
+           className="mt-6 flex flex-col sm:flex-row md:flex-col gap-4">
             <input
               type="email"
               placeholder="Enter your email"

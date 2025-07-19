@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from "react";
 import BlogCard from "../BlogCard/BlogCard";
-import { Link } from "react-router"; 
+import { Link } from "react-router";
 
 const RecentBlogs = () => {
   const [recentBlogs, setRecentBlogs] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/blogs") 
+    fetch("http://localhost:3000/blogs", {
+      credentials: "include",
+    })
       .then((res) => res.json())
       .then((data) => {
-        
         const sorted = data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
 
-        
         setRecentBlogs(sorted.slice(0, 6));
       })
       .catch((err) => console.error("Error fetching blogs:", err));
   }, []);
 
   return (
-    <section className="bg-gradient-to-b from-pink-50 to-purple-100 px-4 py-20 md:px-16">
+    <section className=" px-4 py-20 md:px-16">
       {/* Section Title */}
       <h2 className="text-4xl font-bold text-center text-purple-700 mb-12 animate-pulse">
         Fresh Reads

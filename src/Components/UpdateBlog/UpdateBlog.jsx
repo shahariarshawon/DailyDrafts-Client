@@ -32,7 +32,6 @@ e.preventDefault();
 const form = e.target;
     const formData = new FormData(form);
     const blogData = Object.fromEntries(formData);
-    // console.log(blogData);
     //sending update one to the database
       fetch(`http://localhost:3000/blogs/${_id}`,{
             method:'PUT',
@@ -43,7 +42,6 @@ const form = e.target;
         })
         .then(res=>res.json())
         .then(data=>{
-            // console.log("after update",data);
             if(data.modifiedCount)
             {
                 //sending to the homepage

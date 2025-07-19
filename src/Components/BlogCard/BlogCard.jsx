@@ -18,7 +18,7 @@ const BlogCard = ({ blog }) => {
   } = blog;
 
   const handleWishlistBtnClick = async () => {
-    if (clicked) return; // ✅ Prevent double clicks
+    if (clicked) return; 
 
     const wishlistItem = {
       blogId: _id,

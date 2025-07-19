@@ -32,7 +32,7 @@ const navigate=useNavigate();
       : "hover:text-indigo-600 transition";
 
   return (
-    <div className=" fixed bg- top-0 left-0 w-full bg-white z-50 border-b-1 border-b-blue-300">
+    <div className=" fixed bg- top-0 left-0 w-full bg-gray-100 z-50 border-b-1 border-b-blue-300">
       <nav className="navbar w-[90%] md:w-3/4 mx-auto rounded-md  py-3">
       <div className="navbar-start">
         {/* Mobile Menu */}

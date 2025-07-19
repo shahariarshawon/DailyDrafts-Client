@@ -22,20 +22,21 @@ if (loading || !user) {
     const form = e.target;
     const formData = new FormData(form);
     const blogData = Object.fromEntries(formData);
-    console.log(blogData);
+    // console.log(blogData);
     blogData.createdAt=new Date();
-    console.log("hello gello",blogData);
+    // console.log("hello gello",blogData);
     //sending data to the database
     fetch("http://localhost:3000/blogs", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
+      credentials:"include",
       body: JSON.stringify(blogData),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("After databse", data);
+        // console.log("After databse", data);
          if (data.insertedId) {
           toast.success("Post Submitted Successfully!", {
             position: "top-right",

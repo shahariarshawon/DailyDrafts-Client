@@ -28,7 +28,7 @@ const location=useLocation()
 
     userLogin(email, password)
       .then((result) => {
-        console.log(result)
+        // console.log(result)
         Swal.fire({
           icon: "success",
           title: "Sign in Successful!",
