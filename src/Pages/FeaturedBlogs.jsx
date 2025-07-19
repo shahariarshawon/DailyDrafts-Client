@@ -4,7 +4,7 @@ const FeaturedBlogs = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/blogs")
+    fetch("https://blog-server-khaki-eta.vercel.app/blogs")
       .then((res) => res.json())
       .then((data) => {
         const blogsWithWordCount = data.map((blog) => ({

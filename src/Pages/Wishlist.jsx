@@ -5,7 +5,7 @@ const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/wishlist") 
+    fetch("https://blog-server-khaki-eta.vercel.app/wishlist") 
       .then((res) => res.json())
       .then((data) => setWishlist(data))
       .catch((err) => console.error("Failed to fetch wishlist:", err));

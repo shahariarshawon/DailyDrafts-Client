@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import BlogCard from "../BlogCard/BlogCard";
-import { Link } from "react-router";
+import { Link } from "react-router"; 
 
 const RecentBlogs = () => {
   const [recentBlogs, setRecentBlogs] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/blogs", {
-      credentials: "include",
-    })
+    fetch("https://blog-server-khaki-eta.vercel.app/blogs",{
+ credentials:"include",
+    }) 
+   
       .then((res) => res.json())
       .then((data) => {
+        
         const sorted = data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
 
+        
         setRecentBlogs(sorted.slice(0, 6));
       })
       .catch((err) => console.error("Error fetching blogs:", err));
@@ -38,7 +41,7 @@ const RecentBlogs = () => {
       <div className="flex justify-center mt-12">
         <Link
           to="/all-blogs"
-          className="relative inline-block px-8 py-3 text-white bg-purple-600 rounded-full font-semibold text-lg hover:bg-purple-700 transition duration-300 overflow-hidden group"
+          className="relative inline-block px-4 py-2 text-white bg-purple-600 rounded-full font-semibold hover:bg-purple-700 transition duration-300 overflow-hidden group"
         >
           <span className="absolute inset-0 w-full h-full bg-purple-500 transform scale-0 group-hover:scale-100 transition-transform duration-300 rounded-full z-0"></span>
           <span className="relative z-10">View All Blogs</span>

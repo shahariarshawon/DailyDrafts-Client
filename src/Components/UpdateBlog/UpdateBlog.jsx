@@ -33,7 +33,7 @@ const form = e.target;
     const formData = new FormData(form);
     const blogData = Object.fromEntries(formData);
     //sending update one to the database
-      fetch(`http://localhost:3000/blogs/${_id}`,{
+      fetch(`https://blog-server-khaki-eta.vercel.app/blogs/${_id}`,{
             method:'PUT',
             headers:{
                 'content-type': 'application/json'

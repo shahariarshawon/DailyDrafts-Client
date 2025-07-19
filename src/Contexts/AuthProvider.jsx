@@ -32,13 +32,15 @@ setUser(currentUser);
 setLoading(false);
 if(currentUser?.email){
   const userData={email:currentUser.email};
-  axios.post('http://localhost:3000/jwt',userData,{
+  axios.post('https://blog-server-khaki-eta.vercel.app/jwt',userData,{
     withCredentials:true,
   })
   .then(res=>{
+    console.log(res.data);
   })
   .catch(err=>console.log(err));
 }
+// console.log("user in the auth state changed",currentUser);
 })
 return()=>{
   unSubscribe();

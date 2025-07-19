@@ -33,7 +33,7 @@ const BlogCard = ({ blog }) => {
     };
 
     try {
-      const res = await fetch("http://localhost:3000/wishlist", {
+      const res = await fetch("https://blog-server-khaki-eta.vercel.app/wishlist", {
         method: "POST",
         headers: {
           "content-type": "application/json",

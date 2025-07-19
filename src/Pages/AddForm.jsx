@@ -26,7 +26,7 @@ if (loading || !user) {
     blogData.createdAt=new Date();
     // console.log("hello gello",blogData);
     //sending data to the database
-    fetch("http://localhost:3000/blogs", {
+    fetch("https://blog-server-khaki-eta.vercel.app/blogs", {
       method: "POST",
       headers: {
         "content-type": "application/json",

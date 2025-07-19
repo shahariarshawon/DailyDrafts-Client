@@ -67,7 +67,7 @@ const [matchingPassword,setMatchingPassword]=useState("");
           setUser({ ...user, displayName: name, photoURL: photoURL });
 
           // Save to DB
-          fetch("http://localhost:3000/users", {
+          fetch("https://blog-server-khaki-eta.vercel.app/users", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

@@ -34,7 +34,7 @@ export const router = createBrowserRouter([
       {
         path: "/all-blogs",
         Component: AllBlogs,
-        loader: () => fetch("http://localhost:3000/blogs")
+        loader: () => fetch("https://blog-server-khaki-eta.vercel.app/blogs")
       },
       {
         path: "featured-blogs",
@@ -51,7 +51,7 @@ export const router = createBrowserRouter([
       {
         path: "blog-details/:id",
         Component: BlogDetails,
-        loader: ({ params }) =>fetch(`http://localhost:3000/blogs/${params.id}`),
+        loader: ({ params }) =>fetch(`https://blog-server-khaki-eta.vercel.app/blogs/${params.id}`),
       },
       {
         path: "/update-post/:_id",
@@ -59,7 +59,7 @@ export const router = createBrowserRouter([
           <UpdateBlogPage></UpdateBlogPage>
         </PrivateRoute>,
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/blogs/${params._id}`),
+          fetch(`https://blog-server-khaki-eta.vercel.app/blogs/${params._id}`),
       },
       {
         path: "*",

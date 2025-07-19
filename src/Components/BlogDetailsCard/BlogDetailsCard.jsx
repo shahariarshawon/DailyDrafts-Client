@@ -35,7 +35,7 @@ const BlogDetailsCard = ({ blog }) => {
       createdAt: new Date().toISOString(),
     };
     //sending comment to the database
-    fetch("http://localhost:3000/comments", {
+    fetch("https://blog-server-khaki-eta.vercel.app/comments", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +47,7 @@ const BlogDetailsCard = ({ blog }) => {
         toast.success("Comment posted successfully!");
         e.target.reset();
         // Re-fetch comments
-        fetch(`http://localhost:3000/comments?blogId=${_id}`)
+        fetch(`https://blog-server-khaki-eta.vercel.app/comments?blogId=${_id}`)
           .then((res) => res.json())
           .then((data) => setComments(data));
       })
@@ -59,7 +59,7 @@ const BlogDetailsCard = ({ blog }) => {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/comments?blogId=${_id}`)
+    fetch(`https://blog-server-khaki-eta.vercel.app/comments?blogId=${_id}`)
       .then((res) => res.json())
       .then((data) => setComments(data))
       .catch((err) => console.error("Failed to fetch comments", err));
@@ -77,7 +77,7 @@ const BlogDetailsCard = ({ blog }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/blogs/${_id}`, {
+        fetch(`https://blog-server-khaki-eta.vercel.app/blogs/${_id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
