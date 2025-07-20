@@ -68,34 +68,40 @@ const BlogDetailsCard = ({ blog }) => {
   //deleting blog
 
   const handleDelete = (_id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch(`https://blog-server-khaki-eta.vercel.app/blogs/${_id}`, {
-          method: "DELETE",
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      console.log("Trying to delete blog with ID:", _id);
+
+      fetch(`https://blog-server-khaki-eta.vercel.app/blogs/${_id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("Delete response:", data);
+
+          // Adjust according to your backend's response
+          if (data.deletedCount > 0 || data.success) {
+            Swal.fire("Deleted!", "Your post has been deleted.", "success");
+            navigate("/all-blogs");
+          } else {
+            Swal.fire("Error!", "Failed to delete the post.", "error");
+          }
         })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.success) {
-              Swal.fire("Deleted!", "Your post has been deleted.", "success");
-              navigate("/all-blogs");
-            } else {
-              Swal.fire("Error!", "Failed to delete the post.", "error");
-            }
-          })
-          .catch(() => {
-            Swal.fire("Error!", "Something went wrong.", "error");
-          });
-      }
-    });
-  };
+        .catch((err) => {
+          console.error("Delete error:", err);
+          Swal.fire("Error!", "Something went wrong.", "error");
+        });
+    }
+  });
+};
 
   //getting the comment by blogId
 

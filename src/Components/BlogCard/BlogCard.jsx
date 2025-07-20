@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { Heart, Share2, MoreVertical } from "lucide-react";
 import { Link } from "react-router";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../Contexts/AuthContext";
 
 const BlogCard = ({ blog }) => {
+  const { user } = use(AuthContext);
   const [clicked, setClicked] = useState(false);
 
   const {
@@ -18,7 +20,7 @@ const BlogCard = ({ blog }) => {
   } = blog;
 
   const handleWishlistBtnClick = async () => {
-    if (clicked) return; 
+    if (clicked) return;
 
     const wishlistItem = {
       blogId: _id,
@@ -29,17 +31,22 @@ const BlogCard = ({ blog }) => {
       userPhoto,
       createdAt,
       shortDes,
+      userEmail: user?.email,
       addedAt: new Date(),
     };
 
     try {
-      const res = await fetch("https://blog-server-khaki-eta.vercel.app/wishlist", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(wishlistItem),
-      });
+      const res = await fetch(
+        "https://blog-server-khaki-eta.vercel.app/wishlist",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          credentials: 'include',
+          body: JSON.stringify(wishlistItem),
+        }
+      );
 
       const data = await res.json();
 

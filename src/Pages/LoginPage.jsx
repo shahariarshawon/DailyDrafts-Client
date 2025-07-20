@@ -1,6 +1,6 @@
 import React, { use, useEffect, useState } from "react";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Contexts/AuthContext";
 import { toast } from "react-toastify";
@@ -8,8 +8,13 @@ import { toast } from "react-toastify";
 const LoginPage = () => {
   const { userLogin, googleLogin } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const location = useLocation(); // ✅ FIXED
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
+
+
 // Sending user to the path where he wanted to go without login
-const location=useLocation()
+
   useEffect(() => {
     if (location.state?.needAuth) {
       Swal.fire({
@@ -27,21 +32,23 @@ const location=useLocation()
     const password = form.password.value;
 
     userLogin(email, password)
-      .then((result) => {
-        // console.log(result)
-        Swal.fire({
-          icon: "success",
-          title: "Sign in Successful!",
-          text: "Welcome back to the platform",
-          confirmButtonColor: "#6366f1",
-        });
-      })
-      .catch((error) => {
-        toast.error("Can't find this account!", {
-                    position: "top-right",
-                    autoClose:'500'
-                  });
-      });
+  .then((result) => {
+    Swal.fire({
+      icon: "success",
+      title: "Sign in Successful!",
+      text: "Welcome back to the platform",
+      confirmButtonColor: "#6366f1",
+    }).then(() => {
+      navigate(from, { replace: true });
+    });
+  })
+  .catch((error) => {
+    toast.error("Can't find this account!", {
+      position: "top-right",
+      autoClose: 500,
+    });
+  });
+
   };
 
   const handleLoginWithGoogle = () => {

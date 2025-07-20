@@ -58,16 +58,8 @@ export const router = createBrowserRouter([
         path: "blog-details/:id",
         Component: BlogDetails,
         loader: ({ params }) =>
-          fetch(`https://blog-server-khaki-eta.vercel.app/blogs/${params.id}`, {
-            credentials: "include", // <-- This makes fetch send cookies!
-          }).then((res) => {
-            if (!res.ok) {
-              throw new Response("Failed to load blog details", {
-                status: res.status,
-              });
-            }
-            return res.json();
-          }),
+          fetch(`https://blog-server-khaki-eta.vercel.app/blogs/${params.id}`
+           ),
       },
       {
         path: "/update-post/:_id",

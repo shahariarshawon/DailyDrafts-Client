@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../Contexts/AuthContext";
 
 const Wishlist = () => {
+  const { user } = useContext(AuthContext);
   const [wishlist, setWishlist] = useState([]);
-
   useEffect(() => {
-    fetch("https://blog-server-khaki-eta.vercel.app/wishlist") 
-      .then((res) => res.json())
-      .then((data) => setWishlist(data))
-      .catch((err) => console.error("Failed to fetch wishlist:", err));
-  }, []);
+    if (user?.email) {
+      fetch(
+        `https://blog-server-khaki-eta.vercel.app/wishlist?email=${user.email}`
+      )
+        .then((res) => res.json())
+        .then((data) => setWishlist(data))
+        .catch((err) => console.error("Failed to fetch wishlist:", err));
+    }
+  }, [user]);
 
   return (
     <section className="min-h-screen bg-gradient-to-r from-indigo-50 to-purple-100 px-4 md:px-16 py-30">

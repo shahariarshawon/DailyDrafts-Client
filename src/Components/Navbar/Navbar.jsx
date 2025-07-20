@@ -4,11 +4,19 @@ import { use } from "react";
 import { AuthContext } from "../../Contexts/AuthContext";
 import Swal from "sweetalert2";
 import defaultUserIcon from "../../assets/defaultUserIcon.png"
+import axios from "axios";
 
 const Navbar = () => {
   const { user, userLogout } = use(AuthContext);
 const navigate=useNavigate();
   const handleLogout = () => {
+    axios.post('https://blog-server-khaki-eta.vercel.app/logout', {}, { withCredentials: true })
+  .then(res => {
+    if (res.data.success) {
+      console.log('Logout successful');
+      // clear auth state in frontend
+    }
+  });
     userLogout()
       .then(() => {
         Swal.fire({

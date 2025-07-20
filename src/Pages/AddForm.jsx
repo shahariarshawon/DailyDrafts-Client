@@ -18,32 +18,36 @@ if (loading || !user) {
 }
 
   const handleSubmitForm = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-    const blogData = Object.fromEntries(formData);
-    // console.log(blogData);
-    blogData.createdAt=new Date();
-    // console.log("hello gello",blogData);
-    //sending data to the database
-    fetch("https://blog-server-khaki-eta.vercel.app/blogs", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(blogData),
+  e.preventDefault();
+  const form = e.target;
+  const formData = new FormData(form);
+  const blogData = Object.fromEntries(formData);
+  blogData.createdAt = new Date();
+
+  // Sending data to the database
+  fetch("https://blog-server-khaki-eta.vercel.app/blogs", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    
+    body: JSON.stringify(blogData),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.insertedId || data.acknowledged) {
+        toast.success("Post Submitted Successfully!", {
+          position: "top-right",
+          autoClose: 2000
+        });
+        form.reset();
+      }
     })
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log("After databse", data);
-         if (data.insertedId) {
-          toast.success("Post Submitted Successfully!", {
-            position: "top-right",
-            autoClose:'2000'
-          });
-        }
-      });
-  };
+    .catch(err => {
+      console.error("Form submission error:", err);
+      toast.error("Something went wrong!");
+    });
+};
 
   return (
     <div className="pt-40 flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 px-4 py-10">
