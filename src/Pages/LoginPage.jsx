@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 const LoginPage = () => {
   const { userLogin, googleLogin } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
-  const location = useLocation(); // ✅ FIXED
+  const location = useLocation(); 
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
 
