@@ -1,4 +1,4 @@
-# 📝 Blog Website
+# 📝 DailyDrafts
 
 Welcome to the Blog Website! This project is a fully-featured blogging platform where users can register, post blogs, comment, and manage wishlists. Built with React and Firebase for the front end and Node.js, Express, and MongoDB for the back end, it offers a dynamic and responsive user experience.
 
@@ -102,24 +102,24 @@ The goal of this project is to create a modern blog platform with secure authent
 ## 📦 NPM Packages Used
 
 ### Client
-- `firebase`
-- `axios`
-- `react-router-dom`
-- `framer-motion`
-- `react-toastify`
-- `react-loading-skeleton`
-- `react-photo-view`
-- `@tanstack/react-table`
-- `react-intersection-observer`
-- `dotenv` (for environment)
+- firebase
+- axios
+- react-router-dom
+- framer-motion
+- react-toastify
+- react-loading-skeleton
+- react-photo-view
+- @tanstack/react-table
+- react-intersection-observer
+- dotenv (for environment)
 
 ### Server
-- `express`
-- `cors`
-- `dotenv`
-- `mongodb`
-- `jsonwebtoken`
-- `cookie-parser`
+- express
+- cors
+- dotenv
+- mongodb
+- jsonwebtoken
+- cookie-parser
 
 ---
 
@@ -150,6 +150,10 @@ All commits include clear, descriptive messages related to feature additions, fi
 - [x] No console errors on reload
 
 ---
+
+###Live Preview
+
+![RoomiFy Screenshot](https://i.postimg.cc/PfMjr1hb/Screenshot-from-2025-08-09-16-32-07.png)
 
 <!-- ## 📁 Repositories
 
