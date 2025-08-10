@@ -24,7 +24,7 @@ const RecentBlogs = () => {
   }, []);
 
   return (
-    <section className=" px-4 py-20 md:px-16">
+    <section className=" py-20 w-3/4 mx-auto">
       {/* Section Title */}
       <h2 className="text-4xl font-bold text-center text-purple-700 mb-12 animate-pulse">
         Fresh Reads

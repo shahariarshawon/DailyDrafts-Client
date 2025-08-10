@@ -7,7 +7,7 @@ import RecentBlogs from "../Components/RecentBlogs/RecentBlogs";
 
 const Homepage = () => {
   return (
-    <div className="bg-gradient-to-b from-pink-50 to-purple-100">
+    <div className="bg-gradient-to-b from-pink-50 to-purple-100 ">
       <Banner></Banner>
       <RecentBlogs></RecentBlogs>
       <TopAuthors></TopAuthors>
