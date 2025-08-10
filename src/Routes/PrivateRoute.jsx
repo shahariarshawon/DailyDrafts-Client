@@ -11,7 +11,6 @@ const PrivateRoute = ({ children }) => {
    
     
  
-  // console.log("render hoiche bhai");
   if (loading) {
     return <Loader></Loader>;
   }

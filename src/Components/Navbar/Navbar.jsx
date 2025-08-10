@@ -8,7 +8,6 @@ import axios from "axios";
 
 const Navbar = () => {
   const { user, userLogout } = use(AuthContext);
-  console.log("navbar theke....", user);
   const navigate = useNavigate();
   const handleLogout = () => {
     axios
@@ -19,7 +18,6 @@ const Navbar = () => {
       )
       .then((res) => {
         if (res.data.success) {
-          console.log("Logout successful");
           // clear auth state in frontend
         }
       });
@@ -35,7 +33,6 @@ const Navbar = () => {
         navigate("/auth/login");
       })
       .catch((error) => {
-        console.log(error);
       });
   };
 

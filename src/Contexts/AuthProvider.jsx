@@ -36,7 +36,6 @@ if(currentUser?.email){
     withCredentials:true,
   })
   .then(res=>{
-    console.log(res.data);
   })
   .catch(err=>console.log(err));
 }

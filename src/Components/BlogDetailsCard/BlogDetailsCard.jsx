@@ -78,14 +78,12 @@ const BlogDetailsCard = ({ blog }) => {
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      console.log("Trying to delete blog with ID:", _id);
 
       fetch(`https://blog-server-khaki-eta.vercel.app/blogs/${_id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log("Delete response:", data);
 
           // Adjust according to your backend's response
           if (data.deletedCount > 0 || data.success) {
