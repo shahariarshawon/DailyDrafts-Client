@@ -212,7 +212,7 @@ const Navbar = () => {
           {/* theme toggler button */}
           <div>
             <label className="swap swap-rotate">
-              {/* this hidden checkbox controls the state */}
+              {/* this hidden checkbox controls the statee */}
               <input
                 type="checkbox"
                 className="theme-controller"
