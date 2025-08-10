@@ -13,6 +13,7 @@ import AuthLayout from "../Layouts/AuthLayout";
 import PrivateRoute from "./PrivateRoute";
 import FallbackElement from "../Components/FallbackElement/FallbackElement";
 import UpdateBlogPage from "../Pages/UpdateBlogPage";
+import FAQPage from "../Pages/FAQPage";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "/faq",
+        Component: FAQPage,
+      },
+      {
         path: "wishlist",
         element: (
           <PrivateRoute>
@@ -58,8 +63,7 @@ export const router = createBrowserRouter([
         path: "blog-details/:id",
         Component: BlogDetails,
         loader: ({ params }) =>
-          fetch(`https://blog-server-khaki-eta.vercel.app/blogs/${params.id}`
-           ),
+          fetch(`https://blog-server-khaki-eta.vercel.app/blogs/${params.id}`),
       },
       {
         path: "/update-post/:_id",
@@ -77,6 +81,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
+
   {
     path: "/auth",
     Component: AuthLayout,

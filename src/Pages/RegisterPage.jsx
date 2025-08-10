@@ -22,7 +22,7 @@ const [matchingPassword,setMatchingPassword]=useState("");
   const confirmPassword = form.confirmPassword.value;
 
   // Reset errors
-  setPassError("");
+  setPassError(""); 
   setMatchingPassword("");
 
   // Password Validation
@@ -100,7 +100,7 @@ const handleLoginWithGoogle = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-100 to-violet-100 p-4">
+    <div className="min-h-screen flex items-center pt-30 justify-center bg-gradient-to-br from-rose-100 to-violet-100 p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         <h2 className="text-3xl font-bold text-center text-rose-500 mb-6">
           Create Account
